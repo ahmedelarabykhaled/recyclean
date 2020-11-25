@@ -18,7 +18,7 @@ class CreateTrashClientsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('families_count');
-            $table->integer('region_id')->unsigned();
+            $table->integer('region_id')->unsigned()->nullable();
             $table->foreign('region_id')->on('regions')->references('id');
             $table->string('capable');
             $table->float('total_amount');

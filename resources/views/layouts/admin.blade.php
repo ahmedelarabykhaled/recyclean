@@ -58,7 +58,7 @@
                         لوحة التحكم
                     </a>
                     <div class="sb-sidenav-menu-heading">اشتراك الزيت</div>
-                    @if(\App\User::findOrFail( auth()->user()->id )->role->name == 'admin')
+                    @if(\App\User::findOrFail( auth()->user()->id )->role->role_id == 1)
                     <a class="nav-link" href="{{ url('admin/regions') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         المناطق
@@ -77,7 +77,7 @@
                         تسجيل مشترك فى الزيت
                     </a>
                     <div class="sb-sidenav-menu-heading">اشتراك المخلفات</div>
-                    @if(\App\User::findOrFail( auth()->user()->id )->role->name == 'admin')
+                    @if(\App\User::findOrFail( auth()->user()->id )->role->role_id == 1)
                     <a class="nav-link" href="{{ url('admin/trashSubscription') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         سعر اشتراك المخلفات
