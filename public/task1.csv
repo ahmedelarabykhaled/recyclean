@@ -1,0 +1,10 @@
+download new theme from http://underscores.me/,wordpress project,,set function in the function.php file to resize the post image
+create new categories and it's pages,the first and the second categories,the category not added in it's section if it hasn't posts,
+modify the content of the categories pages,edit the design,,
+add new posts,,,
+add new pages ,home - about - gallery - contact,create the file of the page before add the the page in the back-end and shoud add a comment and put the template name : the page you create name,
+create main menu,main menu,,
+create custom blog page to display the post in my way,content-blog page,,
+,display the post image in custom size/crop with custom size,call a function in the function.php file ,display just the width in your size and display the height and the width
+,return posts by custom category,,regenerate thumbnails to crop the image from specific position
+,edit the design ,,

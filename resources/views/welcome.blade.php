@@ -83,6 +83,28 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                <div>
+                    <?php
+
+                    if ( session('error') )
+                        {
+                            echo session('error');
+                            echo storage_path(session('error'));
+                            echo public_path(session('error'));
+                            ?>
+                            <img src="{{  asset('storage/'.session('error'))  }}" style="width: 200px; height: 100px;" />
+                    <?php
+                        }
+                    ?>
+
+                    <form action="{{ url('savefile') }}" method="post" enctype="multipart/form-data" style="margin: 50px; border: 2px solid black">
+                        @csrf
+                        @method('POST')
+                        <p>input file : </p>
+                        <input type="file" name="file">
+                        <button>click</button>
+                    </form>
+                </div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
