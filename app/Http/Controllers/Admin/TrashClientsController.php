@@ -31,11 +31,44 @@ class TrashClientsController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        $trashClients = null;
+        if (isset($request->clientName) && $request->clientName != '')
+        {
+            $users = User::where('name','like','%'.$request->clientName.'%')->get();
+//            return $users;
+            foreach ($users as $key => $user)
+            {
+                if ($user->trashClient == null)
+                {
+                    unset($users[$key]);
+                }
+            }
+//            return $users;
+            $trashClientsId = array_column($users->toArray(), 'id');
+            $trashClients = TrashClient::whereIn('user_id',$trashClientsId)->get();
+//            return $trashClients;
+        }
+        if (isset($request->ID) && $request->ID != '')
+        {
+            $users = User::where('user_id','like','%'.$request->ID.'%')->get();
+//            return $users;
+            foreach ($users as $key => $user)
+            {
+                if ($user->trashClient == null)
+                {
+                    unset($users[$key]);
+                }
+            }
+//            return $users;
+            $trashClientsId = array_column($users->toArray(), 'id');
+            $trashClients = TrashClient::whereIn('user_id',$trashClientsId)->get();
+//            return $trashClients;
+        }
         $pageName = $this->pageName;
         $regions = Region::get();
-        return view('admin.trashClients.form', compact('pageName', 'regions'));
+        return view('admin.trashClients.form', compact('pageName', 'regions','trashClients'));
     }
 
     /**
@@ -74,7 +107,7 @@ class TrashClientsController extends Controller
         $trashClient->capable = $request->capability;
         $trashClient->total_amount = TrashSubscription::get()->last()->coast;
         $trashClient->save();
-        return redirect('admin/trashClients')->with('success','تم اضافة عميل جديد بنجاح');
+        return back()->with('success','تم اضافة عميل جديد بنجاح');
     }
 
     /**

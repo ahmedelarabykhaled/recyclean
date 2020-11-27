@@ -16,4 +16,6 @@ class TrashClient extends Model
     {
         return $this->hasOne(Region::class, 'id' , 'region_id');
     }
+
+
 }

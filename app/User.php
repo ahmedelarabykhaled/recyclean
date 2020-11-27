@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\OilClient;
+use App\Models\TrashClient;
 use App\Models\UserRole;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -41,5 +43,15 @@ class User extends Authenticatable
     public function role()
     {
         return $this->hasOne(UserRole::class, 'user_id' , 'id');
+    }
+
+    public function oilClient()
+    {
+        return $this->hasOne(OilClient::class, 'user_id' , 'id');
+    }
+
+    public function trashClient()
+    {
+        return $this->hasOne(TrashClient::class, 'user_id', 'id');
     }
 }

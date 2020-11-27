@@ -33,5 +33,20 @@ class AdminSeeder extends Seeder
         $assignAdminRole->role_id = $adminRole->id;
         $assignAdminRole->save();
 
+        $employee = new \App\User;
+        $employee->user_id = 00001;
+        $employee->name = "ahmed";
+        $employee->email = "ahmed@yahoo.com";
+        $employee->password = \Illuminate\Support\Facades\Hash::make('123456789');
+        $employee->phone = "0123456789";
+        $employee->NID = "0123456789";
+        $employee->save();
+
+        $assignEmployeeRole = new App\Models\UserRole;
+        $assignEmployeeRole->user_id = $employee->id;
+        $assignEmployeeRole->role_id = $employeeRole->id;
+        $assignEmployeeRole->save();
+
+
     }
 }

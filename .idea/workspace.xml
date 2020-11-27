@@ -24,11 +24,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d26b75d1-0ab7-4e55-9d58-6d627716f79d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Untitled Diagram.drawio" beforeDir="false" afterPath="$PROJECT_DIR$/Untitled Diagram.drawio" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_18_163129_create_trash_clients_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_18_163129_create_trash_clients_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_23_161921_create_permission_tables.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/OilClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/OilClientsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TrashClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TrashClientsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TrashClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TrashClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/AdminSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AdminSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/trashClients/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/trashClients/form.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +178,8 @@
       <workItem from="1606048548729" duration="2744000" />
       <workItem from="1606147286972" duration="6053000" />
       <workItem from="1606236990537" duration="4213000" />
-      <workItem from="1606294707513" duration="2592000" />
+      <workItem from="1606294707513" duration="3332000" />
+      <workItem from="1606399839007" duration="10225000" />
     </task>
     <servers />
   </component>
@@ -209,14 +211,14 @@
       <screen x="44" y="27" width="1322" height="741" />
     </state>
     <state x="0" y="27" width="585" height="741" key="find.popup/44.27.1322.741@44.27.1322.741" timestamp="1605920703911" />
-    <state x="369" y="174" key="run.anything.popup" timestamp="1606151076047">
+    <state x="369" y="174" key="run.anything.popup" timestamp="1606480207796">
       <screen x="44" y="27" width="1322" height="741" />
     </state>
-    <state x="369" y="174" key="run.anything.popup/44.27.1322.741@44.27.1322.741" timestamp="1606151076047" />
-    <state x="368" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1606158311899">
+    <state x="369" y="174" key="run.anything.popup/44.27.1322.741@44.27.1322.741" timestamp="1606480207796" />
+    <state x="368" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1606480002665">
       <screen x="44" y="27" width="1322" height="741" />
     </state>
-    <state x="368" y="89" width="672" height="678" key="search.everywhere.popup/44.27.1322.741@44.27.1322.741" timestamp="1606158311899" />
+    <state x="368" y="89" width="672" height="678" key="search.everywhere.popup/44.27.1322.741@44.27.1322.741" timestamp="1606480002665" />
     <state x="430" y="308" width="540" height="185" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1605966360777">
       <screen x="44" y="27" width="1322" height="741" />
     </state>
