@@ -20,6 +20,16 @@ class AdminSeeder extends Seeder
         $admin->NID = "0123456789";
         $admin->save();
 
+        $employee = new \App\User;
+        $employee->user_id = 00000;
+        $employee->name = "employee";
+        $employee->email = "employee@employee.com";
+        $employee->password = \Illuminate\Support\Facades\Hash::make('123456789');
+        $employee->phone = "0123456789";
+        $employee->NID = "0123456789";
+        $employee->save();
+
+
         $adminRole = new App\Models\Role;
         $adminRole->name = "admin";
         $adminRole->save();
@@ -46,7 +56,6 @@ class AdminSeeder extends Seeder
         $assignEmployeeRole->user_id = $employee->id;
         $assignEmployeeRole->role_id = $employeeRole->id;
         $assignEmployeeRole->save();
-
 
     }
 }
