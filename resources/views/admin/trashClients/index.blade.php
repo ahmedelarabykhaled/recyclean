@@ -67,22 +67,7 @@
                     <a href="{{ route('trashClients.edit', $client->id) }}" class="btn btn-warning">تعديل</a>
                 </td>
                 <td>
-
-                    <?php
-
-                        $array = $client->subscription->toArray();
-                        usort($array, function($a,$b){
-                            return strtotime($a['created_at']) - strtotime($b['created_at']);
-                        });
-//                        print_r(date('m',strtotime(end($array)['created_at'])));
-                        $lastPaidMonth = date('m',strtotime(end($array)['created_at']));
-                        if (date('m') != $lastPaidMonth)
-                            {
-                                echo '<a href="'. route('paySubscription' , $client->id) .'" class="btn btn-warning">دفع الاشتراك</a>';
-                            }else{
-                            echo "تم دفع الاشتراك لشهر " . $lastPaidMonth;
-                        }
-                    ?>
+                    <a href="{{ route('paySubscription' , $client->id) }}" class="btn btn-warning">دفع الاشتراك</a>
                 </td>
             </tr>
         @endforeach

@@ -17,7 +17,19 @@
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">الاشتراك :</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputPassword" value="{{ $trashSubscripers->last()->coast }}" name="coast">
+                        <input type="number" class="form-control" id="inputPassword"
+                               value="{{ $trashSubscripers->last()->coast }}" name="coast">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="count" class="col-sm-2 col-form-label">عدد الاسر :</label>
+                    <div class="col-sm-10">
+                        <select name="count" id="count" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -32,6 +44,7 @@
         <thead>
         <th>الاشتراك الشهرى :</th>
         <th>المسجل :</th>
+        <th>عدد الاسر :</th>
         <th>تاريخ التسجيل :</th>
         </thead>
         <tbody>
@@ -39,6 +52,7 @@
             <tr>
                 <td>{{ $trashSubscriper->coast }}</td>
                 <td>{{ $trashSubscriper->user->name }}</td>
+                <td>{{ $trashSubscriper->family_count }}</td>
                 <td>{{ $trashSubscriper->created_at }}</td>
             </tr>
         @endforeach

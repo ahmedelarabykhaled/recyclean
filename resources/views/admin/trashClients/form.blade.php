@@ -60,21 +60,7 @@
                                 <td>{{ $client->families_count * \App\Models\TrashSubscription::get()->last()->coast }}</td>
                                 <td>{{ $client->region->name }}</td>
                                 <td>
-                                    {{--                                <a href="{{ route('paySubscription' , $client->id) }}" class="btn btn-warning">دفع الاشتراك</a>--}}
-                                    <?php
-
-                                    $array = $client->subscription->toArray();
-                                    usort($array, function ($a, $b) {
-                                        return strtotime($a['created_at']) - strtotime($b['created_at']);
-                                    });
-                                    //                        print_r(date('m',strtotime(end($array)['created_at'])));
-                                    $lastPaidMonth = date('m', strtotime(end($array)['created_at']));
-                                    if (date('m') != $lastPaidMonth) {
-                                        echo '<a href="' . route('paySubscription', $client->id) . '" class="btn btn-warning">دفع الاشتراك</a>';
-                                    } else {
-                                        echo "تم دفع الاشتراك لشهر " . $lastPaidMonth;
-                                    }
-                                    ?>
+                                    <a href="{{ route('paySubscription', $client->id) }}" class="btn btn-warning">دفع الاشتراك</a>
                                 </td>
                             </tr>
                         @endforeach

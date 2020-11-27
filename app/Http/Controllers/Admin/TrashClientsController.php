@@ -204,7 +204,15 @@ class TrashClientsController extends Controller
     }
     public function paySubscriptionSave(Request $request,$id)
     {
-        $clientSubs = TrashRecieptTrack::where('client_id',$id)->whereMonth('created_at','=',date('m'))->get();
+        $validator = Validator::make($request->all(),[
+            'month' => 'required'
+        ]);
+        if ($validator->fails())
+        {
+            return back()->withErrors($validator->errors());
+        }
+        $clientSubs = TrashRecieptTrack::where('client_id' , $id)->whereMonth('date', date('m',strtotime($request->month)))->whereYear('date',date('Y',strtotime($request->month)))->get();
+//        return date('m',strtotime($request->month));
 //        return $clientSubs;
         if (sizeof($clientSubs) > 0)
         {
@@ -213,6 +221,7 @@ class TrashClientsController extends Controller
         $newTrashSub = new TrashRecieptTrack;
         $newTrashSub->client_id = $id;
         $newTrashSub->employee_id = auth()->user()->id;
+        $newTrashSub->date = date('Y-m-d h:i:s', strtotime($request->month) );
         $newTrashSub->amount = TrashSubscription::get()->last()->coast * TrashClient::findOrFail($id)->families_count;
         $newTrashSub->save();
 

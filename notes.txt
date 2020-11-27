@@ -1,0 +1,5 @@
+update the migration and on the server
+========================================
+
+1 - add "date" column in the trash receipt table;
+2 - add "family_count" in the trash subscription table;

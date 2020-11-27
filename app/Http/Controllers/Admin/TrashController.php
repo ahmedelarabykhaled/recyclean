@@ -19,7 +19,8 @@ class TrashController extends Controller
     public function trashSubscriptionSave(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'coast' => 'required'
+            'coast' => 'required',
+            'count' => 'required'
         ]);
 
         if ($validator->fails())
@@ -28,6 +29,7 @@ class TrashController extends Controller
         }
         $trashSubscription = new TrashSubscription;
         $trashSubscription->coast = $request->coast;
+        $trashSubscription->family_count = $request->count;
         $trashSubscription->user_id = auth()->check() ? auth()->user()->id : 1;
         $trashSubscription->save();
         return back()->with('success','تم تعديل التكلفة بنجاح');
