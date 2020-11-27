@@ -60,7 +60,8 @@
                                 <td>{{ \App\Models\TrashSubscription::where('family_count',$tClient->families_count)->get()->count() != 0 ? \App\Models\TrashSubscription::where('family_count',$tClient->families_count)->get()->last()->coast : 0 }}</td>
                                 <td>{{ $tClient->region->name }}</td>
                                 <td>
-                                    <a href="{{ route('paySubscription', $tClient->id) }}" class="btn btn-warning">دفع الاشتراك</a>
+                                    <a href="{{ route('paySubscription', $tClient->id) }}" class="btn btn-warning">دفع
+                                        الاشتراك</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -207,12 +208,26 @@
 
     <script>
 
-        let trashSub = '{{ \App\Models\TrashSubscription::get()->last()->coast }}'
-        $('#coast').val(trashSub);
-
         $('.coast').on('click', function () {
             let selectedItemValue = $(this).val();
-            $('#coast').val(selectedItemValue * parseInt(trashSub));
+            let family1 = '{{ \App\Models\TrashSubscription::where('family_count',1)->get()->last()->coast }}';
+            let family2 = '{{ \App\Models\TrashSubscription::where('family_count',2)->get()->last()->coast }}';
+            let family3 = '{{ \App\Models\TrashSubscription::where('family_count',3)->get()->last()->coast }}';
+            let family4 = '{{ \App\Models\TrashSubscription::where('family_count',4)->get()->last()->coast }}';
+            let trashSub = 0;
+            if (selectedItemValue == 1)
+            {
+                trashSub = family1;
+            }else if (selectedItemValue == 2)
+            {
+                trashSub = family2
+            }else if (selectedItemValue == 3)
+            {
+                trashSub = family3
+            }else{
+                trashSub = family4
+            }
+            $('#coast').val(parseInt(trashSub));
         })
     </script>
 

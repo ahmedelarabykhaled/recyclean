@@ -20,6 +20,7 @@ class CreateTrashRecieptTracksTable extends Migration
             $table->float('amount');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('users');
+            $table->string('date');
             $table->timestamps();
         });
     }
