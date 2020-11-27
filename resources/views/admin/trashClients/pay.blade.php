@@ -11,7 +11,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h6>الاشتراك المطلوب دفعه : {{ $client->families_count * \App\Models\TrashSubscription::get()->last()->coast }}</h6>
+            <h6>الاشتراك المطلوب دفعه : {{ \App\Models\TrashSubscription::where('family_count',$client->families_count)->get()->count() != 0 ? \App\Models\TrashSubscription::where('family_count',$client->families_count)->get()->last()->coast : 0 }}</h6>
         </div>
         <div class="card-content m-4 container-fluid">
             <div class="row">

@@ -118,7 +118,7 @@ class TrashClientsController extends Controller
         $trashClient->families_count = $request->familyNumber;
         $trashClient->region_id = $request->region;
         $trashClient->capable = $request->capability;
-        $trashClient->total_amount = TrashSubscription::get()->last()->coast;
+        $trashClient->total_amount = TrashSubscription::where('family_count',$request->familyNumber)->get()->count() != 0 ? TrashSubscription::where('family_count',$request->familyNumber)->get()->last()->coast : 0;
         $trashClient->save();
         return back()->with('success', 'تم اضافة عميل جديد بنجاح');
     }
@@ -159,6 +159,7 @@ class TrashClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        return TrashSubscription::where('family_count',$request->familyNumber)->get()->count() != 0 ? TrashSubscription::where('family_count',$request->familyNumber)->get()->last() : 'none';
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'phone' => 'required',
@@ -174,7 +175,7 @@ class TrashClientsController extends Controller
         $trashClient->families_count = $request->familyNumber;
         $trashClient->region_id = $request->region;
         $trashClient->capable = $request->capability;
-        $trashClient->total_amount = TrashSubscription::get()->last()->coast;
+        $trashClient->total_amount = TrashSubscription::where('family_count',$request->familyNumber)->get()->count() != 0 ? TrashSubscription::where('family_count',$request->familyNumber)->get()->last()->coast : 0;
         $trashClient->save();
 
         $user = User::findOrFail($trashClient->user_id);
@@ -218,11 +219,15 @@ class TrashClientsController extends Controller
         {
             return back()->withErrors(['تم دفع الاشتراك مسبقا']);
         }
+        $trashClient = TrashClient::findOrFail($id);
+
+//        return $trashClient->families_count;
+
         $newTrashSub = new TrashRecieptTrack;
         $newTrashSub->client_id = $id;
         $newTrashSub->employee_id = auth()->user()->id;
         $newTrashSub->date = date('Y-m-d h:i:s', strtotime($request->month) );
-        $newTrashSub->amount = TrashSubscription::get()->last()->coast * TrashClient::findOrFail($id)->families_count;
+        $newTrashSub->amount = TrashSubscription::where('family_count',$trashClient->families_count)->get()->count() != 0 ? TrashSubscription::where('family_count',$trashClient->families_count)->get()->last()->coast : 0;
         $newTrashSub->save();
 
         return redirect('admin/trashClients/create')->with('success','تم دفع الاشتراك بنجاح');

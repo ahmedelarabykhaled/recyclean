@@ -61,7 +61,7 @@
                 <td>{{ $client->user->user_id }}</td>
                 <td>{{ $client->user->name }}</td>
                 <td>{{ $client->families_count }}</td>
-                <td>{{ \App\Models\TrashSubscription::get()->last()->coast }}</td>
+                <td>{{ \App\Models\TrashSubscription::where('family_count',$client->families_count)->get()->count() != 0 ? \App\Models\TrashSubscription::where('family_count',$client->families_count)->get()->last()->coast : 0 }}</td>
                 <td>{{ $client->region->name }}</td>
                 <td>
                     <a href="{{ route('trashClients.edit', $client->id) }}" class="btn btn-warning">تعديل</a>
