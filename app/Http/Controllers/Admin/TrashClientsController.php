@@ -140,11 +140,13 @@ class TrashClientsController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $client = TrashClient::findOrFail($id);
+        $regions = Region::get();
+        return view('admin.trashClients.form',compact('client','regions'));
     }
 
     /**
@@ -153,11 +155,35 @@ class TrashClientsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int                      $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'familyNumber' => 'required',
+            'region' => 'required',
+            'address' => 'required',
+            'capability' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        $trashClient = TrashClient::findOrFail($id);
+        $trashClient->families_count = $request->familyNumber;
+        $trashClient->region_id = $request->region;
+        $trashClient->capable = $request->capability;
+        $trashClient->total_amount = TrashSubscription::get()->last()->coast;
+        $trashClient->save();
+
+        $user = User::findOrFail($trashClient->user_id);
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->NID = $request->NID;
+        $user->address = $request->address;
+        $user->save();
+        return back()->with('success', 'تم  تعديل البيانات بنجاح');
     }
 
     /**

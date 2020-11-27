@@ -29,6 +29,15 @@
 
 
         <div class="form-group row">
+            <label for="regions" class="col-sm-2 col-form-label">المنطقة :</label>
+            <select name="region" id="regions" class="form-control col-sm-10">
+                @foreach($regions as $region)
+                    <option value="{{ $region->id }}" {{ isset($oilClient) && $oilClient->region && $oilClient->region->region->id == $region->id  ? 'selected' : ''}} >{{ $region->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group row">
             <label for="colFormLabel" class="col-sm-2 col-form-label">العنوان :</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="colFormLabel" placeholder="العنوان ..."

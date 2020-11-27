@@ -51,6 +51,7 @@
         <th>عدد الاسر :</th>
         <th>المبلغ الشهرى :</th>
         <th>المنطقة :</th>
+        <th>تعديل :</th>
         <th>دفع الاشتراك :</th>
         </thead>
         <tbody>
@@ -62,6 +63,9 @@
                 <td>{{ $client->families_count }}</td>
                 <td>{{ \App\Models\TrashSubscription::get()->last()->coast }}</td>
                 <td>{{ $client->region->name }}</td>
+                <td>
+                    <a href="{{ route('trashClients.edit', $client->id) }}" class="btn btn-warning">تعديل</a>
+                </td>
                 <td>
 
                     <?php

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\OilClientRegion;
 use App\Models\OilClient;
 use App\Models\OilGramToPoint;
 use App\Models\Region;
@@ -79,7 +80,8 @@ class OilClientsController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'NID' => 'required',
-            'amountByGram' => 'required'
+            'amountByGram' => 'required',
+            'region' => 'required'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator);
@@ -96,6 +98,11 @@ class OilClientsController extends Controller
         $oilClient->user_id = $user->id;
         $oilClient->points = ($request->amountByGram * $oilGramToPoint->points) / $oilGramToPoint->grams;
         $oilClient->save();
+
+        $oilClientRegion = new OilClientRegion;
+        $oilClientRegion->oil_client_id = $oilClient->id;
+        $oilClientRegion->region_id = $request->region;
+        $oilClientRegion->save();
         return redirect('admin/oilClients')->with('success', 'تم تسجيل مشترك فى الزيت بنجاح');
 
     }
@@ -124,7 +131,8 @@ class OilClientsController extends Controller
         $pageName = $this->pageName;
         $oilGramToPoint = OilGramToPoint::get()->last();
         $oilClient = OilClient::with('userData')->findOrFail($id);
-        return view('admin.oilClients.form', compact('pageName', 'oilClient', 'oilGramToPoint'));
+        $regions = Region::get();
+        return view('admin.oilClients.form', compact('pageName', 'oilClient', 'oilGramToPoint','regions'));
     }
 
     /**
@@ -137,12 +145,14 @@ class OilClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        return $request;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'phone' => 'required',
             'address' => 'required',
             'NID' => 'required',
-            'amountByGram' => 'required'
+            'amountByGram' => 'required',
+            'region' => 'required'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator);
@@ -157,6 +167,18 @@ class OilClientsController extends Controller
         $user->address = $request->address;
         $user->NID = $request->NID;
         $user->save();
+
+        $oilClientRegion = OilClientRegion::where('oil_client_id',$oilClient->id)->get()->first();
+//        return $oilClientRegion;
+        if ( $oilClientRegion && $request->region != $oilClientRegion->region->id)
+        {
+            $oilClientRegion->delete();
+
+            $oilClientRegion = new OilClientRegion;
+            $oilClientRegion->oil_client_id = $oilClient->id;
+            $oilClientRegion->region_id = $request->region;
+            $oilClientRegion->save();
+        }
         return redirect('admin/oilClients')->with('success', 'تم تعديل العميل بنجاح');
     }
 
