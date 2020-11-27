@@ -110,7 +110,7 @@ class TrashClientsController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->NID = $request->NID;
-        $user->user_id = rand(0000000000, 9999999999);
+        $user->user_id = Region::findOrFail($request->region)->region_char . rand(00000, 99999);
         $user->address = $request->address;
         $user->save();
         $trashClient = new TrashClient;
