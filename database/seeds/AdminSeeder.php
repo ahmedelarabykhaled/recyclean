@@ -14,21 +14,11 @@ class AdminSeeder extends Seeder
         $admin = new \App\User;
         $admin->user_id = 00000;
         $admin->name = "admin";
-        $admin->email = "admin@admin.com";
-        $admin->password = \Illuminate\Support\Facades\Hash::make('123456789');
+        $admin->email = "recycleanm@rc.com";
+        $admin->password = \Illuminate\Support\Facades\Hash::make('01221494940');
         $admin->phone = "0123456789";
         $admin->NID = "0123456789";
         $admin->save();
-
-        $employee = new \App\User;
-        $employee->user_id = 00000;
-        $employee->name = "employee";
-        $employee->email = "employee@employee.com";
-        $employee->password = \Illuminate\Support\Facades\Hash::make('123456789');
-        $employee->phone = "0123456789";
-        $employee->NID = "0123456789";
-        $employee->save();
-
 
         $adminRole = new App\Models\Role;
         $adminRole->name = "admin";
@@ -43,19 +33,6 @@ class AdminSeeder extends Seeder
         $assignAdminRole->role_id = $adminRole->id;
         $assignAdminRole->save();
 
-        $employee = new \App\User;
-        $employee->user_id = 00001;
-        $employee->name = "ahmed";
-        $employee->email = "ahmed@yahoo.com";
-        $employee->password = \Illuminate\Support\Facades\Hash::make('123456789');
-        $employee->phone = "0123456789";
-        $employee->NID = "0123456789";
-        $employee->save();
-
-        $assignEmployeeRole = new App\Models\UserRole;
-        $assignEmployeeRole->user_id = $employee->id;
-        $assignEmployeeRole->role_id = $employeeRole->id;
-        $assignEmployeeRole->save();
 
     }
 }

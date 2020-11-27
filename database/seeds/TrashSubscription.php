@@ -14,6 +14,7 @@ class TrashSubscription extends Seeder
         $ts = new App\Models\TrashSubscription;
         $ts->coast = 100;
         $ts->user_id = 1;
+        $ts->family_count = 1;
         $ts->save();
     }
 }

@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(OilGramToPoint::class);
         $this->call(TrashSubscription::class);
+        $this->call(EmployeesSeeder::class);
     }
 }
