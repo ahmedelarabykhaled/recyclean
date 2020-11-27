@@ -17,5 +17,10 @@ class TrashClient extends Model
         return $this->hasOne(Region::class, 'id' , 'region_id');
     }
 
+    public function subscription()
+    {
+        return $this->hasMany(TrashRecieptTrack::class, 'client_id' , 'id');
+    }
+
 
 }

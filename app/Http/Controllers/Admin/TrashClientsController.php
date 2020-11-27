@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Region;
 use App\Models\TrashClient;
+use App\Models\TrashRecieptTrack;
 use App\Models\TrashSubscription;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,11 +20,31 @@ class TrashClientsController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $pageName = $this->pageName;
-        $trashClients = TrashClient::get();
-        return view('admin.trashClients.index', compact('pageName','trashClients'));
+        if (isset($request->clientName) && $request->clientName != '') {
+            $users = User::where('name', 'like', '%' . $request->clientName . '%')->get();
+            foreach ($users as $key => $user) {
+                if ($user->trashClient == null) {
+                    unset($users[$key]);
+                }
+            }
+            $trashClientsId = array_column($users->toArray(), 'id');
+            $trashClients = TrashClient::whereIn('user_id', $trashClientsId)->get();
+        } elseif (isset($request->ID) && $request->ID != '') {
+            $users = User::where('user_id', 'like', '%' . $request->ID . '%')->get();
+            foreach ($users as $key => $user) {
+                if ($user->trashClient == null) {
+                    unset($users[$key]);
+                }
+            }
+            $trashClientsId = array_column($users->toArray(), 'id');
+            $trashClients = TrashClient::whereIn('user_id', $trashClientsId)->get();
+        } else {
+            $trashClients = TrashClient::get();
+        }
+        return view('admin.trashClients.index', compact('pageName', 'trashClients'));
     }
 
     /**
@@ -34,41 +55,35 @@ class TrashClientsController extends Controller
     public function create(Request $request)
     {
         $trashClients = null;
-        if (isset($request->clientName) && $request->clientName != '')
-        {
-            $users = User::where('name','like','%'.$request->clientName.'%')->get();
+        if (isset($request->clientName) && $request->clientName != '') {
+            $users = User::where('name', 'like', '%' . $request->clientName . '%')->get();
 //            return $users;
-            foreach ($users as $key => $user)
-            {
-                if ($user->trashClient == null)
-                {
+            foreach ($users as $key => $user) {
+                if ($user->trashClient == null) {
                     unset($users[$key]);
                 }
             }
 //            return $users;
             $trashClientsId = array_column($users->toArray(), 'id');
-            $trashClients = TrashClient::whereIn('user_id',$trashClientsId)->get();
+            $trashClients = TrashClient::whereIn('user_id', $trashClientsId)->get();
 //            return $trashClients;
         }
-        if (isset($request->ID) && $request->ID != '')
-        {
-            $users = User::where('user_id','like','%'.$request->ID.'%')->get();
+        if (isset($request->ID) && $request->ID != '') {
+            $users = User::where('user_id', 'like', '%' . $request->ID . '%')->get();
 //            return $users;
-            foreach ($users as $key => $user)
-            {
-                if ($user->trashClient == null)
-                {
+            foreach ($users as $key => $user) {
+                if ($user->trashClient == null) {
                     unset($users[$key]);
                 }
             }
 //            return $users;
             $trashClientsId = array_column($users->toArray(), 'id');
-            $trashClients = TrashClient::whereIn('user_id',$trashClientsId)->get();
+            $trashClients = TrashClient::whereIn('user_id', $trashClientsId)->get();
 //            return $trashClients;
         }
         $pageName = $this->pageName;
         $regions = Region::get();
-        return view('admin.trashClients.form', compact('pageName', 'regions','trashClients'));
+        return view('admin.trashClients.form', compact('pageName', 'regions', 'trashClients'));
     }
 
     /**
@@ -98,8 +113,6 @@ class TrashClientsController extends Controller
         $user->user_id = rand(0000000000, 9999999999);
         $user->address = $request->address;
         $user->save();
-
-
         $trashClient = new TrashClient;
         $trashClient->user_id = $user->id;
         $trashClient->families_count = $request->familyNumber;
@@ -107,7 +120,7 @@ class TrashClientsController extends Controller
         $trashClient->capable = $request->capability;
         $trashClient->total_amount = TrashSubscription::get()->last()->coast;
         $trashClient->save();
-        return back()->with('success','تم اضافة عميل جديد بنجاح');
+        return back()->with('success', 'تم اضافة عميل جديد بنجاح');
     }
 
     /**
@@ -157,5 +170,26 @@ class TrashClientsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function paySubscriptionForm(Request $request, $id)
+    {
+        $client = TrashClient::findOrFail($id);
+        return view('admin.trashClients.pay',compact('client'));
+    }
+    public function paySubscriptionSave(Request $request,$id)
+    {
+        $clientSubs = TrashRecieptTrack::where('client_id',$id)->whereMonth('created_at','=',date('m'))->get();
+//        return $clientSubs;
+        if (sizeof($clientSubs) > 0)
+        {
+            return back()->withErrors(['تم دفع الاشتراك مسبقا']);
+        }
+        $newTrashSub = new TrashRecieptTrack;
+        $newTrashSub->client_id = $id;
+        $newTrashSub->employee_id = auth()->user()->id;
+        $newTrashSub->amount = TrashSubscription::get()->last()->coast * TrashClient::findOrFail($id)->families_count;
+        $newTrashSub->save();
+
+        return redirect('admin/trashClients/create')->with('success','تم دفع الاشتراك بنجاح');
     }
 }

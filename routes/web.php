@@ -37,4 +37,7 @@ Route::group(["prefix" => "admin" , "middleware" => "auth"], function () {
     Route::get('trashSubscription','Admin\TrashController@trashSubscriptionView');
     Route::post('trashSubscription','Admin\TrashController@trashSubscriptionSave');
 
+    Route::get('paySubscription/{id}','Admin\TrashClientsController@paySubscriptionForm')->name('paySubscription');
+    Route::post('paySubscription/{id}','Admin\TrashClientsController@paySubscriptionSave')->name('paySubscription');
+
 });
