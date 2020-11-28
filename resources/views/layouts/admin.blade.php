@@ -57,12 +57,12 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         لوحة التحكم
                     </a>
-                    <div class="sb-sidenav-menu-heading">اشتراك الزيت</div>
-                    @if(\App\User::findOrFail( auth()->user()->id )->role->role_id == 1)
                     <a class="nav-link" href="{{ url('admin/regions') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         المناطق
                     </a>
+                    <div class="sb-sidenav-menu-heading">اشتراك الزيت</div>
+                    @if(\App\User::findOrFail( auth()->user()->id )->role->role_id == 1)
                     <a class="nav-link" href="{{ url('admin/oilGramToPoint') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         تحويل جرام زيت لنقط
