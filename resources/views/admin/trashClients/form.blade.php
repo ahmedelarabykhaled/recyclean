@@ -210,10 +210,10 @@
 
         $('.coast').on('click', function () {
             let selectedItemValue = $(this).val();
-            let family1 = '{{ \App\Models\TrashSubscription::where('family_count',1)->get()->last()->coast }}';
-            let family2 = '{{ \App\Models\TrashSubscription::where('family_count',2)->get()->last()->coast }}';
-            let family3 = '{{ \App\Models\TrashSubscription::where('family_count',3)->get()->last()->coast }}';
-            let family4 = '{{ \App\Models\TrashSubscription::where('family_count',4)->get()->last()->coast }}';
+            let family1 = '{{ \App\Models\TrashSubscription::where('family_count',1)->get()->last() ? \App\Models\TrashSubscription::where('family_count',1)->get()->last()->coast : 0 }}';
+            let family2 = '{{ \App\Models\TrashSubscription::where('family_count',2)->get()->last() ? \App\Models\TrashSubscription::where('family_count',2)->get()->last()->coast : 0 }}';
+            let family3 = '{{ \App\Models\TrashSubscription::where('family_count',3)->get()->last() ? \App\Models\TrashSubscription::where('family_count',3)->get()->last()->coast : 0 }}';
+            let family4 = '{{ \App\Models\TrashSubscription::where('family_count',4)->get()->last() ? \App\Models\TrashSubscription::where('family_count',4)->get()->last()->coast : 0 }}';
             let trashSub = 0;
             if (selectedItemValue == 1)
             {
